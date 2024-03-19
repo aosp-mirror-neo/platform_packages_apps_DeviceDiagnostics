@@ -34,7 +34,7 @@
     <activity android:name="com.android.devicediagnostics.DiagnosticsActivity" />
     <activity android:name="com.android.devicediagnostics.EvaluationModeActivity" />
     <activity android:name="com.android.devicediagnostics.trusted.QrCodeDisplayActivity" />
-    <activity android:name="com.android.devicediagnostics.trusted.QrCodeScanActivity" />
+    <activity android:name="com.android.devicediagnostics.trusted.WaitForResultActivity" />
     <activity android:name="com.android.devicediagnostics.trusted.DisplayResultActivity" />
     <activity android:name="com.android.devicediagnostics.trusted.DisplayAttestationDetailsActivity" />
     <activity android:name="com.android.devicediagnostics.evaluated.QrCodeScanActivity" />
@@ -47,7 +47,7 @@
     <activity android:name="com.android.devicediagnostics.evaluated.TouchTestIntroActivity" />
     <activity android:name="com.android.devicediagnostics.evaluated.TouchTestActivity" />
     <activity android:name="com.android.devicediagnostics.evaluated.TouchTestFinalizeActivity" />
-    <activity android:name="com.android.devicediagnostics.evaluated.QrDisplayActivity" />
+    <activity android:name="com.android.devicediagnostics.evaluated.EvaluationFinalizeActivity" />
     <activity android:name="com.android.devicediagnostics.evaluated.BatteryActivity" />
     <activity android:name="com.android.devicediagnostics.evaluated.StorageActivity" />
   </application>
