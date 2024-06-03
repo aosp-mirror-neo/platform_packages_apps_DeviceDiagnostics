@@ -18,33 +18,47 @@ package com.android.devicediagnostics.trusted
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.commit
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.android.devicediagnostics.R
+import com.android.devicediagnostics.ApplicationInterface
 import com.android.devicediagnostics.PermissionsHelper
-import com.android.devicediagnostics.Protos.DeviceReport
+import com.android.devicediagnostics.Protos.BluetoothPacket
+import com.android.devicediagnostics.R
 import com.android.devicediagnostics.bluetooth.BluetoothServer
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
-import java.lang.Exception
 
-const val DEVICE_REPORT_KEY = "device_report"
+private const val TAG = "WaitForResultsActivity"
 
 class WaitForResultFragment() : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences_trusted_scan, rootKey)
     }
+
+    fun onBluetoothError() {
+        findPreference<Preference>("continue")!!.also {
+            it.setTitle(R.string.bluetooth_error_title)
+            it.setSummary(R.string.trusted_bluetooth_error_summary)
+        }
+    }
 }
 
-class WaitForResultActivity : CollapsingToolbarBaseActivity() {
+class WaitForResultActivity : CollapsingToolbarBaseActivity(), BluetoothServer.ReadListener {
     private var mFragment = WaitForResultFragment()
 
-    private val permissions = PermissionsHelper(this,
-        arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_SCAN)
-    ) { onPermissionsGranted() }
+    private val permissions =
+        PermissionsHelper(
+            this,
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.BLUETOOTH_ADVERTISE,
+                Manifest.permission.BLUETOOTH_CONNECT,
+                Manifest.permission.BLUETOOTH_SCAN
+            )
+        ) {
+            onPermissionsGranted()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,28 +71,39 @@ class WaitForResultActivity : CollapsingToolbarBaseActivity() {
             setReorderingAllowed(true)
             add(R.id.fragment_container_view, mFragment)
         }
-        Thread {
-            try {
-                val bytes = BluetoothServer.read()
-                val report = DeviceReport.parseFrom(bytes)
-                runOnUiThread {
-                    onReportReceived(report)
-                }
-            } catch (_: Exception) {
-                // :TODO: handle this
-            }
-        }.start()
-    }
 
-    fun onReportReceived(report: DeviceReport) {
-        val state = TrustedState.fromActivity(this)!!
-        state.report = report
-        launchTrustedActivity(this, DisplayResultActivity::class.java.name, state)
-        finish()
+        val btServer = ApplicationInterface.app.getBluetoothServer()
+        btServer.startRead(this)
     }
 
     override fun onResume() {
         super.onResume()
         permissions.requestPermissions()
+    }
+
+    override fun onBluetoothReadPacket(packet: BluetoothPacket) {
+        if (mFragment.isDetached) {
+            return
+        }
+
+        if (!packet.hasDeviceReport()) {
+            onBluetoothReadError(Exception("Packet is type: ${packet.payloadCase}"))
+            return
+        }
+
+        val btServer = ApplicationInterface.app.getBluetoothServer()
+        btServer.reset()
+
+        val state = TrustedState.fromActivity(this)!!
+        state.report = packet.deviceReport
+        launchTrustedActivity(this, DisplayResultActivity::class.java.name, state)
+        finish()
+    }
+
+    override fun onBluetoothReadError(e: Exception) {
+        Log.e(TAG, "Could not read device report: $e")
+        if (!mFragment.isDetached) {
+            mFragment.onBluetoothError()
+        }
     }
 }

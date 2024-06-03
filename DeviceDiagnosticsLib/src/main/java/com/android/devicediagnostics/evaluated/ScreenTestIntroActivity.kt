@@ -20,8 +20,9 @@ import android.os.Bundle
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.android.devicediagnostics.ApplicationInterface
 import com.android.devicediagnostics.R
-import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
+import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
 
 class ScreenTestIntroFragment() : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -49,9 +50,14 @@ class ScreenTestIntroActivity : CollapsingToolbarBaseActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(
-                    R.id.fragment_container_view,
-                    ScreenTestIntroFragment()
+                add(R.id.fragment_container_view, ScreenTestIntroFragment())
+            }
+
+            if (ApplicationInterface.app.isUsingScreenReader(this)) {
+                showAccessibilityDialog(
+                    this,
+                    R.string.screen_test_title,
+                    R.string.visual_test_warning_summary
                 )
             }
         }

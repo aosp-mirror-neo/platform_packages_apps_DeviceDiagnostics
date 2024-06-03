@@ -22,99 +22,208 @@ import android.bluetooth.BluetoothSocket
 import android.bluetooth.le.AdvertiseCallback
 import android.bluetooth.le.AdvertiseData
 import android.bluetooth.le.AdvertiseSettings
-import android.bluetooth.le.BluetoothLeAdvertiser
+import android.os.Handler
+import android.os.Looper
 import android.os.ParcelUuid
 import android.util.Log
+import com.android.devicediagnostics.Protos.BluetoothPacket
 import com.android.devicediagnostics.Protos.TrustedDeviceInfo
+import com.android.devicediagnostics.runInBackground
 import java.util.UUID
-import org.json.JSONObject
 
 val SERVICE_UUID: UUID = UUID.fromString("0000b81d-0000-1000-8000-00805f9b34fb")
 private const val TAG = "BluetoothServer"
 const val CHUNK = 4096
 
-private const val PSM = "PSM"
+class BluetoothServer {
+    private val adapter
+        get() = BluetoothAdapter.getDefaultAdapter()
+    private var socket: BluetoothSocket? = null
+    private var starter: ServerStarter? = null
 
-class BluetoothConnectionData(var psm: Int = 0) {
-    constructor(json: String) : this() {
-        psm = JSONObject(json).getInt(PSM)
+    interface StartListener {
+        fun onServerAvailable(connectionData: BluetoothConnectionData)
+        fun onServerStarted()
+        fun onServerError()
     }
 
-    override fun toString(): String {
-        return JSONObject().put(PSM, psm).toString()
+    interface ReadListener {
+        fun onBluetoothReadPacket(packet: BluetoothPacket)
+        fun onBluetoothReadError(e: Exception)
     }
+
+    fun start(trustedDeviceInfo: TrustedDeviceInfo, listener: StartListener) {
+        if (starter != null) {
+            starter!!.stop()
+        }
+
+        val server = this
+        val callbacks =
+            object : ServerStarter.Listener {
+                override fun onServerAdvertiseStarted(connectionData: BluetoothConnectionData) {
+                    listener.onServerAvailable(connectionData)
+                }
+
+                override fun onServerConnected(socket: BluetoothSocket) {
+                    server.socket = socket
+                    listener.onServerStarted()
+                    starter = null
+                }
+
+                override fun onServerAdvertiseError() {
+                    listener.onServerError()
+                }
+            }
+        starter = ServerStarter(adapter, trustedDeviceInfo, callbacks)
+        starter!!.start()
+    }
+
+    fun startRead(listener: ReadListener) {
+        val handler = Handler(Looper.myLooper()!!)
+        val localSocket = socket
+        runInBackground {
+            try {
+                if (localSocket == null) {
+                    throw Exception("Socket is closed")
+                }
+                val packet = readBluetoothPacket(localSocket)
+                handler.post() { listener.onBluetoothReadPacket(packet) }
+            } catch (e: Exception) {
+                handler.post() { listener.onBluetoothReadError(e) }
+            }
+
+            try {
+                val ack = BluetoothPacket.newBuilder().setAck(true).build()
+                writeBluetoothPacket(socket!!, ack)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error sending report acknowledgement: $e")
+            }
+        }
+    }
+
+    fun reset() {
+        starter?.stop()
+        starter = null
+        socket?.close()
+        socket = null
+    }
+
+    val bluetoothEnabled
+        get() = adapter.isEnabled
 }
 
-object BluetoothServer {
-    private val adapter get() = BluetoothAdapter.getDefaultAdapter()
-    private var serverSocket: BluetoothServerSocket? = null
-    private var socket: BluetoothSocket? = null
-    var connectionData = BluetoothConnectionData()
-        private set
-    val bluetoothEnabled get() = adapter.isEnabled
-
-    fun start(trustedDeviceInfo: TrustedDeviceInfo, written: () -> Unit = {}) {
-        startAdvertisement()
-        serverSocket = adapter.listenUsingInsecureL2capChannel()
-        Log.d(TAG, "Server started with psm ${serverSocket?.psm}")
-        connectionData.psm = serverSocket!!.psm
-
-        Thread {
-            socket = serverSocket!!.accept()
-            serverSocket!!.close()
-            serverSocket = null
-            advertiser!!.stopAdvertising(advertiseCallback)
-            var output = socket!!.outputStream
-            output.write(trustedDeviceInfo.toByteArray())
-            Log.d(TAG, "wrote start message")
-            written()
-        }.start()
-    }
-
-    fun read(): ByteArray {
-        val input = socket!!.inputStream
-        var b = ByteArray(0)
-        while (true) {
-            val chunk = ByteArray(CHUNK)
-            val size = input.read(chunk)
-            b += chunk.slice(IntRange(0, size - 1))
-            if (size < CHUNK) break;
-        }
-        Log.d(TAG, "read: ${b.size}")
-        socket!!.outputStream.write("Done".toByteArray())
-        socket!!.close()
-        socket = null
-        return b
-    }
-
-    private var advertiser: BluetoothLeAdvertiser? = null
-    private var advertiseSettings = AdvertiseSettings.Builder()
-        .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_POWER)
-        .setTimeout(0)
-        .build()
-    private var advertiseData = AdvertiseData.Builder()
-        .addServiceUuid(ParcelUuid(SERVICE_UUID))
-        .setIncludeDeviceName(true).build()
-
+class ServerStarter(
+    private val adapter: BluetoothAdapter,
+    private val trustedDeviceInfo: TrustedDeviceInfo,
+    private val listener: ServerStarter.Listener
+) {
+    private val handler = Handler(Looper.myLooper()!!)
+    private val advertiseSettings =
+        AdvertiseSettings.Builder()
+            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_POWER)
+            .setTimeout(0)
+            .build()
+    private val advertiseData =
+        AdvertiseData.Builder()
+            .addServiceUuid(ParcelUuid(SERVICE_UUID))
+            .setIncludeDeviceName(true)
+            .build()
+    private val advertiser = adapter.bluetoothLeAdvertiser
     private var advertiseCallback: AdvertiseCallback? = null
+    private var active: Boolean = false
 
-    private fun startAdvertisement() {
-        advertiser = adapter.bluetoothLeAdvertiser
+    // Access to this should be protected by synchronized(this).
+    private var serverSocket: BluetoothServerSocket? = null
+
+    interface Listener {
+        fun onServerAdvertiseStarted(connectionData: BluetoothConnectionData)
+        fun onServerConnected(socket: BluetoothSocket)
+        fun onServerAdvertiseError()
+    }
+
+    fun start() {
+        active = true
+
+        advertiseCallback =
+            object : AdvertiseCallback() {
+                override fun onStartFailure(errorCode: Int) {
+                    postServerError(Exception("Advertisement failed, error code $errorCode"))
+                }
+
+                override fun onStartSuccess(settings: AdvertiseSettings?) {
+                    Log.d(TAG, "Advertisement started")
+                }
+            }
+        advertiser.startAdvertising(advertiseSettings, advertiseData, advertiseCallback!!)
         Log.d(TAG, "startAdvertisement: with advertiser $advertiser")
 
-        advertiseCallback = DeviceAdvertiseCallback()
-        advertiser!!.startAdvertising(advertiseSettings, advertiseData, advertiseCallback)
+        serverSocket = adapter.listenUsingInsecureL2capChannel()
+        Log.d(TAG, "Server started with psm ${serverSocket!!.psm}")
+
+        val connectionData =
+            BluetoothConnectionData(serverSocket!!.psm, trustedDeviceInfo.challenge.toByteArray())
+        listener.onServerAdvertiseStarted(connectionData)
+
+        val packet = BluetoothPacket.newBuilder().setTrustedDeviceInfo(trustedDeviceInfo).build()
+
+        // Thread since this waits for connections and otherwise will block Ux
+        runInBackground() {
+            synchronized(this) {
+                if (serverSocket == null) {
+                    return@runInBackground
+                }
+
+                try {
+                    val socket = serverSocket!!.accept()
+                    stopAdvertising()
+
+                    writeBluetoothPacket(socket, packet)
+                    Log.d(TAG, "wrote start message")
+
+                    postServerStarted(socket)
+                } catch (e: Exception) {
+                    postServerError(e)
+                }
+            }
+        }
     }
 
-    private class DeviceAdvertiseCallback : AdvertiseCallback() {
-        override fun onStartFailure(errorCode: Int) {
-            super.onStartFailure(errorCode)
-            Log.d(TAG, "Advertising failed with error: $errorCode")
+    private fun postServerStarted(socket: BluetoothSocket) {
+        handler.post() {
+            if (active) {
+                listener.onServerConnected(socket)
+                active = false
+            } else {
+                socket.close()
+            }
         }
+    }
 
-        override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
-            super.onStartSuccess(settingsInEffect)
-            Log.d(TAG, "Advertising successfully started")
+    private fun postServerError(e: Exception) {
+        handler.post() {
+            if (active) {
+                listener.onServerAdvertiseError()
+                stopAdvertising()
+                active = false
+            }
         }
+    }
+
+    private fun stopAdvertising() {
+        synchronized(this) {
+            if (advertiseCallback != null) {
+                advertiser.stopAdvertising(advertiseCallback!!)
+                advertiseCallback = null
+            }
+            if (serverSocket != null) {
+                serverSocket?.close()
+                serverSocket = null
+            }
+        }
+    }
+
+    fun stop() {
+        stopAdvertising()
+        active = false
     }
 }

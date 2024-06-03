@@ -18,12 +18,14 @@ package com.android.devicediagnostics.evaluated
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.util.Log
 import java.nio.ByteBuffer
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.ECGenParameterSpec
 import java.util.zip.Deflater
 
+private const val TAG = "GetAttestation"
 private const val EC_CURVE = "secp256r1"
 private const val KEYSTORE_ALIAS = "attestation_collector_key"
 
@@ -41,9 +43,16 @@ private fun getAttestation(challenge: ByteArray, withImei: Boolean): ByteArray {
     // Use reflection to call this system API so we can still build in Android Studio
     if (withImei)
         builder =
-            builder::class.members.firstOrNull { it.name == "setAttestationIds" }?.call(builder,
-                intArrayOf(1, 2) // AttestationUtils.ID_TYPE_SERIAL, AttestationUtils.ID_TYPE_IMEI
-            ) as KeyGenParameterSpec.Builder
+            builder::class
+                .members
+                .firstOrNull { it.name == "setAttestationIds" }
+                ?.call(
+                    builder,
+                    intArrayOf(
+                        1,
+                        2
+                    ) // AttestationUtils.ID_TYPE_SERIAL, AttestationUtils.ID_TYPE_IMEI
+                ) as KeyGenParameterSpec.Builder
 
     val spec = builder.build()
 
@@ -54,9 +63,8 @@ private fun getAttestation(challenge: ByteArray, withImei: Boolean): ByteArray {
 
     var report = ByteArray(0)
     for (cert in keyStore.getCertificateChain(KEYSTORE_ALIAS)) {
-        report += ByteBuffer.allocate(Int.SIZE_BYTES)
-            .putInt(cert.encoded.size)
-            .array() + cert.encoded
+        report +=
+            ByteBuffer.allocate(Int.SIZE_BYTES).putInt(cert.encoded.size).array() + cert.encoded
     }
 
     val deflater = Deflater()
@@ -80,8 +88,10 @@ fun createAttestationRecord(challenge: ByteArray): ByteArray {
     return try {
         getAttestation(challenge, withImei = true)
     } catch (e: java.security.ProviderException) {
+        Log.e(TAG, "Could not get attestation with IMEI, retrying without: $e")
         getAttestation(challenge, withImei = false)
     } catch (e: SecurityException) {
+        Log.e(TAG, "Could not get attestation with IMEI, retrying without: $e")
         getAttestation(challenge, withImei = false)
     }
 }

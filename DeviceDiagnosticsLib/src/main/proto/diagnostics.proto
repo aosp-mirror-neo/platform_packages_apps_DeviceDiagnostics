@@ -24,11 +24,39 @@ message TestResults {
     bool touch_test = 2;
 }
 
-message DeviceReport {
-    TestResults tests = 1;
-    bytes attestation = 2;
+message BatteryInfo {
+    reserved 2, 3;
+    optional int32 cycle_count = 1;
+    optional int32 state_of_health = 4;
+    optional string serial = 5;
+    optional string part_status = 6;
+    int32 legacy_health = 7;
+    optional int64 manufacture_timestamp = 8;
+    optional int64 first_usage_timestamp = 9;
+}
+
+message StorageInfo {
+    reserved 1, 2;
+    optional int32 useful_lifetime_remaining = 3;
+    int64 capacity_bytes = 4;
 }
 
 message TrustedDeviceInfo {
     bytes challenge = 1;
+}
+
+message DeviceReport {
+    TestResults tests = 1;
+    bytes attestation = 2;
+    BatteryInfo battery = 3;
+    StorageInfo storage = 4;
+    int32 launch_level = 5;
+}
+
+message BluetoothPacket {
+    oneof payload {
+        TrustedDeviceInfo trusted_device_info = 1;
+        DeviceReport device_report = 2;
+        bool ack = 3;
+    }
 }
