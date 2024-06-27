@@ -24,9 +24,9 @@
     <string name="unavailable" msgid="7842920330665850121">"Недоступно"</string>
     <string name="bluetooth_connecting" msgid="7966802493158307502">"Подключение…"</string>
     <string name="component_health_title" msgid="6177813132789269842">"Состояние компонентов"</string>
-    <string name="component_health_summary" msgid="2799337555706868947">"Выполните тестирование, чтобы узнать состояние батареи и хранилища."</string>
+    <string name="component_health_summary" msgid="2799337555706868947">"Выполните тестирование, чтобы узнать состояние батареи и хранилища"</string>
     <string name="evaluation_mode_title" msgid="5845218248059550975">"Режим проверки"</string>
-    <string name="evaluation_mode_summary" msgid="7327453519906858863">"Используйте одно устройство для проверки другого."</string>
+    <string name="evaluation_mode_summary" msgid="7327453519906858863">"Используйте одно устройство для проверки другого"</string>
     <string name="manual_eval_title" msgid="4335717606581762762">"Ручное тестирование"</string>
     <string name="screen_test_title" msgid="2748510049598105155">"Тестирование экрана"</string>
     <string name="touch_test_title" msgid="4347784874948129736">"Тест датчика касания"</string>
@@ -49,12 +49,12 @@
     <string name="bluetooth_error_title" msgid="4352617586275775499">"Ошибка Bluetooth"</string>
     <string name="bluetooth_error_summary" msgid="8411286861814582793">"При попытке связаться с надежным устройством произошла ошибка. Проверьте, что Bluetooth включен, и попробуйте снова."</string>
     <string name="sending_report" msgid="8735615783234611336">"Отправка отчета на надежное устройство…"</string>
-    <string name="evaluation_complete_title" msgid="2503185542217582851">"Оценка завершена"</string>
+    <string name="evaluation_complete_title" msgid="2503185542217582851">"Проверка завершена"</string>
     <string name="evaluation_complete_summary" msgid="1899365605498435450">"Результаты будут показаны на надежном устройстве."</string>
     <string name="screen_test_result_title" msgid="4741510800317631056">"Результат тестирования экрана"</string>
     <string name="screen_test_good_result_title" msgid="8032695232528965724">"Хорошо"</string>
     <string name="screen_test_good_result_summary" msgid="1995033654279054797">"Явных дефектов нет"</string>
-    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"Обнаружены дефекты"</string>
+    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"Плохо"</string>
     <string name="screen_test_bad_result_summary" msgid="2826928400358426952">"Есть дефекты экрана"</string>
     <string name="manual_testing_title" msgid="4512384040828953255">"Ручное тестирование"</string>
     <string name="visual_test_warning_summary" msgid="8088295720348050370">"Во время следующей проверки потребуется осмотр дисплея и подтверждение. Продолжить?"</string>

@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.android.devicediagnostics.bluetooth
 
-package com.android.devicediagnostics;
+import com.android.devicediagnostics.Protos.DeviceReport
+import com.android.devicediagnostics.Protos.TrustedDeviceInfo
+import com.google.protobuf.ByteString
 
-import org.junit.Test;
+class FakeBluetoothClient : BluetoothClient() {
+    override fun start(listener: ScanListener) {
+        val info =
+            TrustedDeviceInfo.newBuilder().setChallenge(ByteString.copyFrom(byteArrayOf(0))).build()
 
-import static org.junit.Assert.*;
+        listener.onBluetoothConnected(info)
+    }
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
+    override fun sendReport(report: DeviceReport) {}
 
-  @Test
-  public void addition_isCorrect() {
-    assertEquals(4, 2 + 2);
-  }
+    override fun reset() {}
 }
