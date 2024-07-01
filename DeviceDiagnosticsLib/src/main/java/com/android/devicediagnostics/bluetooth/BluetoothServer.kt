@@ -108,8 +108,8 @@ class BluetoothServer {
 
             // Wait for the client to hang up before resetting.
             try {
-                readBluetoothPacket(localSocket)
-            } finally {
+                readBluetoothPacketOrEof(localSocket)
+            } catch (_: Exception) {} finally {
                 reset()
             }
         }
@@ -226,6 +226,7 @@ class ServerStarter(
     }
 
     private fun stopAdvertising() {
+        serverSocket?.close()
         synchronized(this) {
             if (advertiseCallback != null) {
                 advertiser.stopAdvertising(advertiseCallback!!)
