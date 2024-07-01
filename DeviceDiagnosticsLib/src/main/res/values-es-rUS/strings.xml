@@ -37,7 +37,7 @@
     <string name="eval_mode_trusted_device_summary" msgid="8217291325895255590">"Evalúa otro dispositivo. Se necesita conexión a Internet."</string>
     <string name="evaluated_device_title" msgid="5546625787928257821">"Dispositivo evaluado"</string>
     <string name="eval_mode_evaluated_device_summary" msgid="3636314493314426253">"Ejecuta pruebas de diagnóstico que validará otro dispositivo."</string>
-    <string name="evaluated_scan_now" msgid="5413803134686672845">"Escanear ahora"</string>
+    <string name="evaluated_scan_now" msgid="5413803134686672845">"Escanea ahora"</string>
     <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"Escanea el código QR en el dispositivo de confianza en el siguiente rectángulo"</string>
     <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"Cuando hayas escaneado el código QR de forma correcta, este dispositivo comenzará una serie de pruebas automáticamente."</string>
     <string name="evaluated_scan_select_device_title" msgid="7981800769200920339">"Selecciona el dispositivo de confianza"</string>
@@ -67,7 +67,7 @@
     <string name="battery_part_status" msgid="504091754655232085">"Estado de las piezas"</string>
     <string name="battery_original" msgid="2552600989411644999">"Original"</string>
     <string name="battery_replaced" msgid="2356023769075469649">"Reemplazada"</string>
-    <string name="battery_part_history" msgid="5669260842330985767">"Historial de piezas"</string>
+    <string name="battery_part_history" msgid="5669260842330985767">"Historial de la pieza"</string>
     <string name="battery_health_summary_fmt" msgid="4363832259742003306">"%1$s de capacidad original"</string>
     <string name="battery_health_unavailable" msgid="5093923315136769788">"Estado de la batería no disponible"</string>
     <string name="battery_health_cold" msgid="4164463402047143412">"Fría"</string>

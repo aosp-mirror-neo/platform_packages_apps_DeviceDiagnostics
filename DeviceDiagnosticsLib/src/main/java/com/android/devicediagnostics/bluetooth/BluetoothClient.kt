@@ -28,20 +28,30 @@ import android.os.ParcelUuid
 import android.util.Log
 import com.android.devicediagnostics.Protos.BluetoothPacket
 import com.android.devicediagnostics.Protos.DeviceReport
+import com.android.devicediagnostics.Protos.PacketCommand
 import com.android.devicediagnostics.Protos.TrustedDeviceInfo
 import kotlinx.coroutines.sync.Mutex
 
 private const val TAG = "BluetoothClient"
 
-class BluetoothClient {
+abstract class BluetoothClient {
     interface ScanListener {
         fun onBluetoothConnected(trustedDeviceInfo: TrustedDeviceInfo)
+
         fun onBluetoothConnectionFailed()
     }
 
     var connectionData: BluetoothConnectionData? = null
 
-    fun start(listener: ScanListener) {
+    abstract fun start(listener: ScanListener)
+
+    abstract fun sendReport(report: DeviceReport)
+
+    abstract fun reset()
+}
+
+class BluetoothClientImpl : BluetoothClient() {
+    override fun start(listener: ScanListener) {
         synchronized(lock) { startImpl(listener) }
     }
 
@@ -102,7 +112,7 @@ class BluetoothClient {
         }
     }
 
-    fun reset() {
+    override fun reset() {
         synchronized(lock) { resetImpl() }
     }
 
@@ -127,12 +137,12 @@ class BluetoothClient {
         listener = null
     }
 
-    fun sendReport(report: DeviceReport) {
+    override fun sendReport(report: DeviceReport) {
         synchronized(lock) {
-            val packet = BluetoothPacket.newBuilder().setDeviceReport(report).build()
+            val packet = BluetoothPacket.newBuilder().setDeviceReport(report)
             writeBluetoothPacket(socket!!, packet)
             val reply = readBluetoothPacket(socket!!)
-            if (!reply.hasAck()) {
+            if (reply.command != PacketCommand.COMMAND_ACK) {
                 throw Exception("Expected acknowledgement packet")
             }
             resetImpl()
