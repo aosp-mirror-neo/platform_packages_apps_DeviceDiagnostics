@@ -30,7 +30,7 @@
     <string name="manual_eval_title" msgid="4335717606581762762">"آزمایش‌های دستی"</string>
     <string name="screen_test_title" msgid="2748510049598105155">"آزمایش نمایشگر"</string>
     <string name="touch_test_title" msgid="4347784874948129736">"آزمایش حسگر لمسی"</string>
-    <string name="component_title" msgid="6580046234562555655">"وضعیت جزء"</string>
+    <string name="component_title" msgid="6580046234562555655">"وضعیت مؤلفه"</string>
     <string name="storage_title" msgid="5921235202250843966">"وضعیت فضای ذخیره‌سازی"</string>
     <string name="battery_title" msgid="6707361668941323259">"وضعیت باتری"</string>
     <string name="trusted_device_title" msgid="6291497999963968533">"دستگاه مطمئن"</string>
@@ -86,8 +86,8 @@
     <string name="touch_test_result_summary" msgid="9215663453308287653">"این نتیجه آزمایش حسگر لمسی است. می‌توانید این آزمایش را با پیمایش به‌عقب دوباره اجرا کنید."</string>
     <string name="touch_test_good_title" msgid="4008967693136685770">"آزمایش حسگر لمسی موفق بود"</string>
     <string name="touch_test_bad_title" msgid="6888320344429184690">"آزمایش حسگر لمسی ناموفق بود"</string>
-    <string name="pass" msgid="6411665547268368837">"موفق"</string>
-    <string name="fail" msgid="3918028202746427731">"ناموفق"</string>
+    <string name="pass" msgid="6411665547268368837">"قبول"</string>
+    <string name="fail" msgid="3918028202746427731">"مردود"</string>
     <string name="attestation_verified" msgid="6535873137799452259">"گواهینامه درستی‌سنجی‌شده"</string>
     <string name="attestation_device_locked" msgid="1423476869833029478">"دستگاه قفل است"</string>
     <string name="attestation_verified_boot_state" msgid="6360953823092860181">"وضعیت راه‌اندازی درستی‌سنجی‌شده"</string>

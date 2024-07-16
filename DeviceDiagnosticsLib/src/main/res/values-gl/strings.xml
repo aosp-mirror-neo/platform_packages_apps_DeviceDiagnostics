@@ -17,7 +17,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" msgid="4531685026837318886">"DeviceDiagnostics"</string>
+    <string name="app_name" msgid="4531685026837318886">"Diagnóstico do dispositivo"</string>
     <string name="app_title" msgid="2766786539301072967">"Diagnóstico do dispositivo"</string>
     <string name="activity_continue" msgid="2190118984182069151">"Continuar"</string>
     <string name="proceed" msgid="8922926495095369132">"Continuar"</string>
@@ -39,7 +39,7 @@
     <string name="eval_mode_evaluated_device_summary" msgid="3636314493314426253">"Executa probas de diagnóstico que validará outro dispositivo."</string>
     <string name="evaluated_scan_now" msgid="5413803134686672845">"Escanear agora"</string>
     <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"Escanea o código QR co dispositivo de confianza no rectángulo que aparece máis abaixo"</string>
-    <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"Así que escanees correctamente o código QR, o dispositivo executará de forma automática unha serie de probas."</string>
+    <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"Así que escanees correctamente o código QR, este dispositivo executará de forma automática unha serie de probas."</string>
     <string name="evaluated_scan_select_device_title" msgid="7981800769200920339">"Seleccionar o dispositivo de confianza"</string>
     <string name="evaluated_scan_select_device_summary" msgid="1455560796129881500">"Se o prefires, podes seleccionar o dispositivo na seguinte lista"</string>
     <string name="evaluated_bt_fail_title" msgid="4085858793778843205">"Produciuse un erro coa conexión. Téntao de novo."</string>
@@ -54,7 +54,7 @@
     <string name="screen_test_result_title" msgid="4741510800317631056">"Resultado da proba de pantalla"</string>
     <string name="screen_test_good_result_title" msgid="8032695232528965724">"En bo estado"</string>
     <string name="screen_test_good_result_summary" msgid="1995033654279054797">"Non hai ningún defecto evidente"</string>
-    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"Mala"</string>
+    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"En mal estado"</string>
     <string name="screen_test_bad_result_summary" msgid="2826928400358426952">"Hai defectos na pantalla"</string>
     <string name="manual_testing_title" msgid="4512384040828953255">"Proba manual"</string>
     <string name="visual_test_warning_summary" msgid="8088295720348050370">"A seguinte proba require unha inspección visual e unha confirmación da pantalla física. Seguro que queres continuar?"</string>
@@ -105,7 +105,7 @@
     <string name="attestation_manufacturer" msgid="2043278400561674518">"Fabricante"</string>
     <string name="attestation_model" msgid="8223243376214262662">"Modelo"</string>
     <string name="attestation_vendor_patch_level" msgid="5961013660410857720">"Nivel do parche do provedor"</string>
-    <string name="attestation_boot_patch_level" msgid="6266071138457400006">"Nivel do parche de arranque"</string>
+    <string name="attestation_boot_patch_level" msgid="6266071138457400006">"Nivel do parche do cargador de arranque"</string>
     <string name="yes" msgid="6686215078709381643">"Si"</string>
     <string name="no" msgid="5957591978126937912">"Non"</string>
     <string name="unknown" msgid="6936738212381747979">"Descoñécese"</string>

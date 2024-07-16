@@ -23,12 +23,12 @@
     <string name="proceed" msgid="8922926495095369132">"המשך"</string>
     <string name="unavailable" msgid="7842920330665850121">"לא זמין"</string>
     <string name="bluetooth_connecting" msgid="7966802493158307502">"מתחברים למכשיר…"</string>
-    <string name="component_health_title" msgid="6177813132789269842">"תקינות הרכיב"</string>
-    <string name="component_health_summary" msgid="2799337555706868947">"הרצה של בדיקות ידניות וצפייה בתקינות הסוללה והאחסון"</string>
+    <string name="component_health_title" msgid="6177813132789269842">"תקינות הרכיבים"</string>
+    <string name="component_health_summary" msgid="2799337555706868947">"בדיקות ידניות ונתונים על תקינות הסוללה והאחסון"</string>
     <string name="evaluation_mode_title" msgid="5845218248059550975">"מצב בדיקה"</string>
-    <string name="evaluation_mode_summary" msgid="7327453519906858863">"שימוש במכשיר אחד כדי להעריך מכשיר אחר"</string>
+    <string name="evaluation_mode_summary" msgid="7327453519906858863">"שימוש במכשיר אחד כדי לבדוק מכשיר אחר"</string>
     <string name="manual_eval_title" msgid="4335717606581762762">"בדיקות ידניות"</string>
-    <string name="screen_test_title" msgid="2748510049598105155">"הצגת הבדיקה"</string>
+    <string name="screen_test_title" msgid="2748510049598105155">"בדיקת המסך"</string>
     <string name="touch_test_title" msgid="4347784874948129736">"בדיקת מגע"</string>
     <string name="component_title" msgid="6580046234562555655">"סטטוס הרכיב"</string>
     <string name="storage_title" msgid="5921235202250843966">"סטטוס האחסון"</string>
@@ -38,8 +38,8 @@
     <string name="evaluated_device_title" msgid="5546625787928257821">"מכשיר שנבדק"</string>
     <string name="eval_mode_evaluated_device_summary" msgid="3636314493314426253">"הרצה של בדיקות אבחון שיאומתו על ידי מכשיר אחר."</string>
     <string name="evaluated_scan_now" msgid="5413803134686672845">"הפעלת הסריקה"</string>
-    <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"‏עליך לסרוק במכשיר המהימן את קוד ה-QR שמופיע במלבן למטה"</string>
-    <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"‏לאחר הסריקה של קוד ה-QR, תופעל באופן אוטומטי סדרה של בדיקות במכשיר הזה."</string>
+    <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"‏צריך לסרוק במכשיר המהימן את קוד ה-QR שמופיע במלבן למטה"</string>
+    <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"‏אחרי הסריקה של קוד ה-QR, תופעל באופן אוטומטי סדרה של בדיקות במכשיר הזה."</string>
     <string name="evaluated_scan_select_device_title" msgid="7981800769200920339">"בחירה של מכשיר מהימן"</string>
     <string name="evaluated_scan_select_device_summary" msgid="1455560796129881500">"אפשר גם לבחור את המכשיר מהרשימה הבאה"</string>
     <string name="evaluated_bt_fail_title" msgid="4085858793778843205">"החיבור נכשל, צריך לנסות שוב."</string>
