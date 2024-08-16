@@ -37,7 +37,7 @@
     <string name="eval_mode_trusted_device_summary" msgid="8217291325895255590">"Evalúa otro dispositivo. Se necesita conexión a Internet."</string>
     <string name="evaluated_device_title" msgid="5546625787928257821">"Dispositivo evaluado"</string>
     <string name="eval_mode_evaluated_device_summary" msgid="3636314493314426253">"Ejecuta pruebas de diagnóstico que validará otro dispositivo."</string>
-    <string name="evaluated_scan_now" msgid="5413803134686672845">"Escanear ahora"</string>
+    <string name="evaluated_scan_now" msgid="5413803134686672845">"Escanea ahora"</string>
     <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"Escanea el código QR en el dispositivo de confianza en el siguiente rectángulo"</string>
     <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"Cuando hayas escaneado el código QR de forma correcta, este dispositivo comenzará una serie de pruebas automáticamente."</string>
     <string name="evaluated_scan_select_device_title" msgid="7981800769200920339">"Selecciona el dispositivo de confianza"</string>
@@ -67,7 +67,7 @@
     <string name="battery_part_status" msgid="504091754655232085">"Estado de las piezas"</string>
     <string name="battery_original" msgid="2552600989411644999">"Original"</string>
     <string name="battery_replaced" msgid="2356023769075469649">"Reemplazada"</string>
-    <string name="battery_part_history" msgid="5669260842330985767">"Historial de piezas"</string>
+    <string name="battery_part_history" msgid="5669260842330985767">"Historial de la pieza"</string>
     <string name="battery_health_summary_fmt" msgid="4363832259742003306">"%1$s de capacidad original"</string>
     <string name="battery_health_unavailable" msgid="5093923315136769788">"Estado de la batería no disponible"</string>
     <string name="battery_health_cold" msgid="4164463402047143412">"Fría"</string>
@@ -130,7 +130,7 @@
     <string name="evaluate_another_title" msgid="6275248738668045886">"Evalúa otro dispositivo"</string>
     <string name="back_to_main_title" msgid="2496143013300121780">"Vuelve al menú principal"</string>
     <string name="locked" msgid="2034650000550950371">"Bloqueado"</string>
-    <string name="not_locked" msgid="1663929635666930122">"No bloqueado"</string>
+    <string name="not_locked" msgid="1663929635666930122">"Sin bloqueo"</string>
     <string name="qr_code_description" msgid="4665712956570877310">"Código QR"</string>
     <string name="continue_on_evaluated_title" msgid="4078768809567832628">"Continúa en el dispositivo que se está evaluando"</string>
     <string name="continue_on_evaluated_summary" msgid="2610517924466437207">"Completa las pruebas en el dispositivo que estás evaluando y, luego, los resultados aparecerán aquí."</string>
@@ -140,5 +140,5 @@
     <string name="screen_test_summary" msgid="6565006807310186664">"Ahora se te mostrarán una serie de pantallas. Analiza cada una y busca defectos. Cuando estés conforme, toca la pantalla para pasar a la siguiente. Al final, se te preguntará si las pantallas se ven perfectas."</string>
     <string name="screen_test_summary_one_shot" msgid="7447685087916591748">"Ahora se te mostrarán una serie de pantallas. Analiza cada una y busca defectos. Toca la pantalla para pasar a la siguiente."</string>
     <string name="screen_test_finalize" msgid="9147123495799275930">"De las siguientes opciones, selecciona la que mejor describa el estado de la pantalla."</string>
-    <string name="touch_test_summary" msgid="5989536270591433560">"Ahora se te mostrará una pantalla roja.\n \n Desliza el dedo sobre la pantalla hasta que esté completamente blanca. Si no puedes blanquear parte de la pantalla, presiona la pantalla de forma leve para indicar que el sensor táctil no funciona por completo.\n \n"</string>
+    <string name="touch_test_summary" msgid="5989536270591433560">"Ahora se te mostrará una pantalla roja.\n \n Desliza el dedo sobre la pantalla hasta que esté completamente blanca. Si no puedes blanquear una parte, presiona la pantalla de forma leve para indicar que el sensor táctil no funciona por completo.\n \n"</string>
 </resources>

@@ -28,7 +28,7 @@
     <string name="evaluation_mode_title" msgid="5845218248059550975">"Modalità di valutazione"</string>
     <string name="evaluation_mode_summary" msgid="7327453519906858863">"Utilizza un dispositivo per valutarne un altro"</string>
     <string name="manual_eval_title" msgid="4335717606581762762">"Test manuali"</string>
-    <string name="screen_test_title" msgid="2748510049598105155">"Test display"</string>
+    <string name="screen_test_title" msgid="2748510049598105155">"Test schermo"</string>
     <string name="touch_test_title" msgid="4347784874948129736">"Test sensore touch"</string>
     <string name="component_title" msgid="6580046234562555655">"Stato componente"</string>
     <string name="storage_title" msgid="5921235202250843966">"Stato spazio di archiviazione"</string>
@@ -37,7 +37,7 @@
     <string name="eval_mode_trusted_device_summary" msgid="8217291325895255590">"Valuta un altro dispositivo. È necessaria una connessione a internet."</string>
     <string name="evaluated_device_title" msgid="5546625787928257821">"Dispositivo valutato"</string>
     <string name="eval_mode_evaluated_device_summary" msgid="3636314493314426253">"Esegui test diagnostici che verranno convalidati da un altro dispositivo."</string>
-    <string name="evaluated_scan_now" msgid="5413803134686672845">"Esegui scansione ora"</string>
+    <string name="evaluated_scan_now" msgid="5413803134686672845">"Scansiona ora"</string>
     <string name="evaluated_scan_now_summary" msgid="4225756086513777639">"Scansiona il codice QR sul dispositivo attendibile nel rettangolo sottostante"</string>
     <string name="evaluated_scan_continue_summary" msgid="4316722493724296922">"Una volta scansionato il codice QR, il dispositivo avvierà automaticamente una serie di test."</string>
     <string name="evaluated_scan_select_device_title" msgid="7981800769200920339">"Seleziona dispositivo attendibile"</string>
@@ -52,9 +52,9 @@
     <string name="evaluation_complete_title" msgid="2503185542217582851">"Valutazione completata"</string>
     <string name="evaluation_complete_summary" msgid="1899365605498435450">"I risultati verranno ora visualizzati sul dispositivo attendibile"</string>
     <string name="screen_test_result_title" msgid="4741510800317631056">"Risultato del test dello schermo"</string>
-    <string name="screen_test_good_result_title" msgid="8032695232528965724">"Buono"</string>
+    <string name="screen_test_good_result_title" msgid="8032695232528965724">"Buone"</string>
     <string name="screen_test_good_result_summary" msgid="1995033654279054797">"Nessun difetto evidente"</string>
-    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"Gravi"</string>
+    <string name="screen_test_bad_result_title" msgid="2287969677501836657">"Non buone"</string>
     <string name="screen_test_bad_result_summary" msgid="2826928400358426952">"Lo schermo ha dei difetti"</string>
     <string name="manual_testing_title" msgid="4512384040828953255">"Test manuale"</string>
     <string name="visual_test_warning_summary" msgid="8088295720348050370">"Il seguente test richiede l\'ispezione visiva e la conferma del display fisico. Vuoi continuare?"</string>
@@ -86,8 +86,8 @@
     <string name="touch_test_result_summary" msgid="9215663453308287653">"Ecco il risultato del test del sensore touch. Puoi ripetere il test tornando indietro."</string>
     <string name="touch_test_good_title" msgid="4008967693136685770">"Test sensore touch riuscito"</string>
     <string name="touch_test_bad_title" msgid="6888320344429184690">"Test sensore touch non riuscito"</string>
-    <string name="pass" msgid="6411665547268368837">"Superato"</string>
-    <string name="fail" msgid="3918028202746427731">"Non superato"</string>
+    <string name="pass" msgid="6411665547268368837">"Test riuscito"</string>
+    <string name="fail" msgid="3918028202746427731">"Test non riuscito"</string>
     <string name="attestation_verified" msgid="6535873137799452259">"Certificato verificato"</string>
     <string name="attestation_device_locked" msgid="1423476869833029478">"Dispositivo bloccato"</string>
     <string name="attestation_verified_boot_state" msgid="6360953823092860181">"Stato di Avvio verificato"</string>
@@ -135,7 +135,7 @@
     <string name="continue_on_evaluated_title" msgid="4078768809567832628">"Continua sul dispositivo in fase di valutazione"</string>
     <string name="continue_on_evaluated_summary" msgid="2610517924466437207">"Completa i test sul dispositivo che stai valutando. I risultati saranno poi visualizzati qui."</string>
     <string name="trusted_bluetooth_error_summary" msgid="2655404481798929818">"Si è verificato un errore durante la comunicazione con il dispositivo valutato. Verifica che il Bluetooth sia attivo e riprova."</string>
-    <string name="trusted_scan_now_title" msgid="6091670756288147729">"Esegui scansione ora"</string>
+    <string name="trusted_scan_now_title" msgid="6091670756288147729">"Scansiona ora"</string>
     <string name="trusted_scan_now_summary" msgid="578587921199486348">"Sul dispositivo che vuoi valutare, vai a Impostazioni, Sistema, Diagnostica dispositivo, Modalità di valutazione, Dispositivo valutato. Segui le istruzioni su quel dispositivo."</string>
     <string name="screen_test_summary" msgid="6565006807310186664">"Adesso ti verrà mostrata una serie di schermate. Esaminale tutte e cerca i difetti. Se la schermata ti soddisfa, tocca lo schermo per passare a quella successiva. Alla fine, ti verrà chiesto se le schermate sembrano senza difetti."</string>
     <string name="screen_test_summary_one_shot" msgid="7447685087916591748">"Adesso ti verrà mostrata una serie di schermate. Esaminale tutte e cerca i difetti. Tocca lo schermo per passare alla schermata successiva."</string>
