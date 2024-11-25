@@ -26,6 +26,7 @@ import android.os.Binder
 import android.os.Bundle
 import android.os.Process
 import android.os.ResultReceiver
+import android.os.SystemProperties
 import android.os.UserHandle
 import java.io.FileDescriptor
 import kotlin.system.exitProcess
@@ -43,10 +44,28 @@ class Tokenizer(private val args: Array<String>) {
     }
 }
 
+fun isDebuggable(): Boolean {
+    return SystemProperties.getInt("ro.debuggable", 0) == 1
+}
+
+fun isTradeInModeEnabled(): Boolean {
+    return SystemProperties.getInt("persist.adb.tradeinmode", 0) > 0
+}
+
+fun ensureTradeInModeAllowed() {
+    if (!isDebuggable() && !isTradeInModeEnabled()) {
+        throw Exception("Command not available.")
+    }
+}
+
 class Commands {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
+            if (SystemProperties.getInt("sys.boot_completed", 0) != 1) {
+                System.err.println("Device not fully booted")
+                exitProcess(1)
+            }
             try {
                 main_wrapper(Tokenizer(args))
             } catch (e: Exception) {
@@ -60,6 +79,8 @@ class Commands {
             if (cmd == null) {
                 throw IllegalArgumentException("Expected command.")
             }
+
+            ensureTradeInModeAllowed()
 
             if (cmd == "getstatus") {
                 doGetStatus(args)
